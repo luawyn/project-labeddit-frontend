@@ -1,0 +1,47 @@
+@use '../../styles/variables'
+@use '../../styles/mixins'
+
+.container
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+
+#logo
+  margin-top: 100px
+
+#input
+  margin-top: 107px
+
+#buttons
+  margin-top: 56px
+
+img
+  width: 5.25rem
+  margin: 0 auto
+
+h1, p
+  font-family: variables.$font-ibm
+
+h1
+  color: variables.$title-color
+
+input
+  border: none
+  width: 363px
+  height: 60px
+  padding: 18px
+
+.divider
+  margin: 18px auto
+  height: 1px
+  background: variables.$gradient-color
+  width: 363px
+  
+
+.btn-login
+  @include mixins.btn
+
+.btn-signup
+ @include mixins.btn-signup
+  
