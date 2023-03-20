@@ -2,41 +2,44 @@
 @use '../../styles/mixins'
 
 .container
+  margin: 0 20px
+
+.flex
   display: flex
   flex-direction: column
+  flex-wrap: wrap
   justify-content: center
   align-items: center
 
 #logo
-  margin-top: 100px
+  margin-top: 6.25rem
 
 #input
-  margin-top: 107px
+  margin-top: 6.68rem
 
 #buttons
-  margin-top: 56px
+  margin-top: 3.5rem
 
 img
   width: 5.25rem
   margin: 0 auto
 
-h1, p
-  font-family: variables.$font-ibm
-
-h1
+.title
   color: variables.$title-color
+  font-size: 32px
+  font-weight: 700
 
 input
   border: none
-  width: 363px
-  height: 60px
-  padding: 18px
+  width: 22.68rem
+  height: 3.75rem
+  padding: 1.12rem
 
 .divider
-  margin: 18px auto
+  margin: 1.12rem auto
   height: 1px
   background: variables.$gradient-color
-  width: 363px
+  width: 20.6rem
   
 
 .btn-login

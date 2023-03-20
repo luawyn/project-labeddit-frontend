@@ -1,10 +1,51 @@
 import { Input, Flex } from "@chakra-ui/react";
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PostCards from "../../components/PostCards/PostCards";
+import { BASE_URL } from "../../constants/url";
+import { GlobalContext } from "../../contexts/GlobalContext";
 import Header from "../../layout/Header/Header";
+import { goToLoginPage } from "../../routes/coordinator";
 import "../HomePage/homePage.sass";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+  const context = useContext(GlobalContext);
+  const { posts, fetchPosts } = context;
+  const [content, setContent] = useState("");
+
+  useEffect(() => {
+    const token = window.localStorage.getItem("labeddit-token");
+
+    if (!token) {
+      goToLoginPage(navigate);
+    } else {
+      fetchPosts();
+    }
+  }, []);
+
+  const createPost = async (event) => {
+    event.preventDefault();
+
+    try {
+      const body = {
+        content: content,
+      };
+
+      await axios.post(BASE_URL + "/posts", body, {
+        headers: {
+          Authorization: window.localStorage.getItem("labeddit-token"),
+        },
+      });
+
+      setContent("");
+      fetchPosts();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="container">
       <Header />
@@ -17,13 +58,18 @@ const HomePage = () => {
           height="130"
           paddingBottom="100px"
           maxWidth="334"
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
         />
-        <a href="" className="btn-post">
+        <a onClick={createPost} className="btn-post">
           Postar
         </a>
         <div className="divider"></div>
       </Flex>
-      <PostCards />
+      {posts &&
+        posts.map((post) => {
+          return <PostCards key={post.id} post={post} />;
+        })}
     </div>
   );
 };
