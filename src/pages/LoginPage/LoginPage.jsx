@@ -17,8 +17,10 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -35,6 +37,8 @@ const LoginPage = () => {
 
     try {
       setIsLoading(true);
+      setErrorPassword(false);
+      setErrorEmail(false);
 
       const body = {
         email: form.email,
@@ -50,6 +54,12 @@ const LoginPage = () => {
     } catch (error) {
       setIsLoading(false);
       console.error(error);
+      if (error?.response?.data === "'password' incorreto") {
+        setErrorPassword(true);
+      }
+      if (error?.response?.data === "'email' não cadastrado") {
+        setErrorEmail(true);
+      }
     }
   };
   return (
@@ -61,6 +71,8 @@ const LoginPage = () => {
       </div>
       <Flex gap="2" direction="column" align="center" id="input">
         <form onSubmit={login} autoComplete="off">
+          {errorPassword ? <p className="error">senha incorreta</p> : ""}
+          {errorEmail ? <p className="error">email não cadastrado</p> : ""}
           <Input
             placeholder="E-mail"
             size="lg"

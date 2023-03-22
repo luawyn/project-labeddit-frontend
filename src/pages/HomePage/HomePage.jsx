@@ -38,7 +38,6 @@ const HomePage = () => {
           Authorization: window.localStorage.getItem("labeddit-token"),
         },
       });
-
       setContent("");
       fetchPosts();
     } catch (error) {
@@ -56,8 +55,9 @@ const HomePage = () => {
           type="text"
           placeholder="Escreva seu post..."
           height="130"
-          paddingBottom="100px"
+          paddingBottom="100"
           maxWidth="334"
+          paddingLeft="3"
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
@@ -66,10 +66,12 @@ const HomePage = () => {
         </a>
         <div className="divider"></div>
       </Flex>
-      {posts &&
-        posts.map((post) => {
-          return <PostCards key={post.id} post={post} />;
-        })}
+      <div className="gap">
+        {posts &&
+          posts.map((post) => {
+            return <PostCards key={post.id} post={post} />;
+          })}
+      </div>
     </div>
   );
 };
