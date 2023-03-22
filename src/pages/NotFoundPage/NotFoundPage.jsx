@@ -1,11 +1,23 @@
 import React from "react";
 import { Box, Heading, Text, Button } from "@chakra-ui/react";
-import Header from "../../layout/Header/Header";
+import logo from "../../assets/logo.png";
+import { goToHomePage } from "../../routes/coordinator";
+import { useNavigate } from "react-router-dom";
 
 const NotFoundPage = () => {
+  const navigate = useNavigate();
   return (
     <>
-      <Header />
+      <div className="container">
+        <div className="grid">
+          <img
+            src={logo}
+            alt=""
+            id="img-logo"
+            onClick={() => goToHomePage(navigate)}
+          />
+        </div>
+      </div>
       <Box textAlign="center" py={10} px={6}>
         <Heading
           display="inline-block"

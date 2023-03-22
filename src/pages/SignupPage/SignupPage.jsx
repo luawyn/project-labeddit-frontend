@@ -27,6 +27,7 @@ const SignupPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [show, setShow] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorEmail, setErrorEmail] = useState(false);
   const handleClick = () => setShow(!show);
   const navigate = useNavigate();
   const [form, setForm] = useState({
@@ -46,6 +47,8 @@ const SignupPage = () => {
     event.preventDefault();
 
     try {
+      setIsLoading(true);
+      setErrorEmail(false);
       const body = {
         name: form.name,
         email: form.email,
@@ -55,8 +58,13 @@ const SignupPage = () => {
       const response = await axios.post(BASE_URL + "/users/signup", body);
       window.localStorage.setItem("labeddit-token", response.data.token);
       goToHomePage(navigate);
+      setIsLoading(false);
     } catch (error) {
-      console.error(error);
+      setIsLoading(false);
+      console.error(error?.response?.data);
+      if (error?.response?.data === "Erro inesperado") {
+        setErrorEmail(true);
+      }
     }
   };
 
@@ -69,6 +77,7 @@ const SignupPage = () => {
         </p>
       </div>
       <Flex gap="2" direction="column" align="center">
+        {errorEmail ? <p className="error">email já cadastrado</p> : ""}
         <form onSubmit={signup} autoComplete="off">
           <Input
             placeholder="Apelido"

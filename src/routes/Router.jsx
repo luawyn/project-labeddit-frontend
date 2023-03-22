@@ -5,6 +5,7 @@ import SignupPage from "../pages/SignupPage/SignupPage";
 import LoginPage from "../pages/LoginPage/LoginPage";
 import PostPage from "../pages/PostPage/PostPage";
 import NotFoundPage from "../pages/NotFoundPage/NotFoundPage";
+import Footer from "../layout/Footer/Footer";
 
 const Router = () => {
   return (
@@ -16,6 +17,7 @@ const Router = () => {
         <Route path="/posts/comment/:postId" element={<PostPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 };
